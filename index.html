@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vertrek Schothorst</title>
+<style>
+  :root {
+    --ns-blue: #003082;
+    --ns-blue-dark: #00205a;
+    --ns-blue-row: #0a3a8c;
+    --ns-yellow: #ffc917;
+    --white: #ffffff;
+    --muted: #b8c6e3;
+    --red: #ff4d4d;
+    --row-h: 89px; /* 9 rijen vullen de 806px tussen kop en voet */
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: #000;
+    overflow: hidden;
+    cursor: none;
+  }
+
+  body {
+    font-family: "Segoe UI", "Frutiger", Roboto, Arial, sans-serif;
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Vast Full HD canvas; wordt geschaald als het scherm afwijkt */
+  #stage {
+    position: absolute;
+    top: 0; left: 0;
+    width: 1920px; height: 1080px;
+    background: var(--ns-blue);
+    transform-origin: 0 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    height: 150px;
+    background: var(--ns-yellow);
+    color: var(--ns-blue);
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+    gap: 40px;
+  }
+  .logo {
+    height: 110px; width: auto;
+    flex: none;
+    padding-right: 40px;
+    border-right: 3px solid rgba(0, 48, 130, .25);
+  }
+  .title { flex: 1; }
+  .title .label {
+    font-size: 30px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; opacity: .8;
+  }
+  .title .station { font-size: 64px; font-weight: 700; line-height: 1.05; }
+  .clock {
+    font-size: 96px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: 2px;
+  }
+
+  /* ---------- Tabel ---------- */
+  .cols, .row {
+    display: grid;
+    grid-template-columns: 250px 1fr 210px 270px;
+    align-items: center;
+    column-gap: 30px;
+    padding: 0 60px;
+  }
+  .cols {
+    height: 64px;
+    background: var(--ns-blue-dark);
+    color: var(--muted);
+    font-size: 26px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+  }
+  .cols .c-track { text-align: center; }
+
+  #rows { flex: 1; overflow: hidden; }
+
+  .row {
+    height: var(--row-h);
+    border-bottom: 2px solid rgba(255,255,255,.08);
+  }
+  .row:nth-child(even) { background: var(--ns-blue-row); }
+
+  .time { display: flex; align-items: baseline; gap: 14px; font-variant-numeric: tabular-nums; }
+  .time .planned { font-size: 50px; font-weight: 700; }
+  .time .delay { font-size: 36px; font-weight: 700; color: var(--red); }
+
+  .dest { min-width: 0; }
+  .dest .name {
+    font-size: 46px; font-weight: 700; line-height: 1.1;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .dest .name .recog { font-weight: 500; color: var(--ns-yellow); margin-left: 16px; font-size: 34px; }
+  .dest .sub {
+    font-size: 24px; color: var(--muted); margin-top: 2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .dest .sub.warn { color: var(--ns-yellow); font-weight: 600; }
+  .dest .sub.alert { color: var(--red); font-weight: 700; }
+
+  .track { display: flex; justify-content: center; }
+  .track span {
+    min-width: 76px; height: 64px; padding: 0 12px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--white); color: var(--ns-blue);
+    font-size: 42px; font-weight: 700; border-radius: 8px;
+  }
+  .track span.changed { background: var(--ns-yellow); }
+
+  .type { font-size: 30px; font-weight: 600; }
+  .type .eta { display: block; font-size: 24px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+  /* Rijdt niet */
+  .row.cancelled .planned,
+  .row.cancelled .dest .name { text-decoration: line-through; text-decoration-thickness: 4px; opacity: .6; }
+  .row.cancelled .track span { opacity: .4; }
+
+  .empty {
+    height: 100%; display: flex; align-items: center; justify-content: center;
+    font-size: 44px; color: var(--muted);
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    height: 60px;
+    background: var(--ns-blue-dark);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 60px;
+    font-size: 22px; color: var(--muted);
+  }
+  #status .dot {
+    display: inline-block; width: 14px; height: 14px; border-radius: 50%;
+    background: #3ecf6e; margin-right: 10px; vertical-align: middle;
+  }
+  #status.stale .dot { background: var(--ns-yellow); }
+  #status.error .dot { background: var(--red); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <header>
+    <img class="logo" src="images/logo_ict_college_transparant.png" alt="ICT College">
+    <div class="title">
+      <div class="label">Vertrektijden</div>
+      <div class="station" id="station-name">Amersfoort Schothorst</div>
+    </div>
+    <div class="clock" id="clock">--:--</div>
+  </header>
+
+  <div class="cols">
+    <div>Vertrek</div>
+    <div>Naar</div>
+    <div class="c-track">Spoor</div>
+    <div>Trein</div>
+  </div>
+
+  <div id="rows"><div class="empty">Vertrektijden laden…</div></div>
+
+  <footer>
+    <div id="status"><span class="dot"></span><span id="status-text">Verbinden…</span></div>
+    <div>ICT College Amersfoort · ROC Midden Nederland — goede reis!</div>
+    <div>Bron: NS Reisinformatie</div>
+  </footer>
+</div>
+
+<script>
+  const REFRESH_MS = 30000;  // nieuwe data ophalen
+  const MAX_ROWS   = 10;
+  const params     = new URLSearchParams(location.search);
+  const API_URL    = params.has('demo') ? 'demo.json' : 'api.php';
+
+  let departures = [];
+  let lastUpdate = null;
+
+  /* ---- Schalen naar het scherm (voor als het geen exact 1920x1080 is) ---- */
+  function fit() {
+    const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+    const stage = document.getElementById('stage');
+    stage.style.transform = `scale(${s})`;
+    stage.style.left = `${(innerWidth - 1920 * s) / 2}px`;
+    stage.style.top  = `${(innerHeight - 1080 * s) / 2}px`;
+  }
+  addEventListener('resize', fit);
+  fit();
+
+  /* ---- Hulpfuncties ---- */
+  // NS levert "+0200" zonder dubbele punt; niet elke browser snapt dat.
+  const parse = s => new Date(s.replace(/([+-]\d{2})(\d{2})$/, '$1:$2'));
+  const hhmm  = s => s.substring(11, 16); // tijd zoals het station hem toont
+  const esc   = s => String(s ?? '').replace(/[&<>"']/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  function render() {
+    const now  = Date.now();
+    const rows = document.getElementById('rows');
+
+    // Vertrokken treinen (meer dan 1 minuut geleden) niet meer tonen
+    const list = departures
+      .filter(d => params.has('demo') || parse(d.actualDateTime || d.plannedDateTime) > now - 60000)
+      .slice(0, MAX_ROWS);
+
+    if (!list.length) {
+      rows.innerHTML = '<div class="empty">Geen vertrektijden beschikbaar</div>';
+      return;
+    }
+
+    rows.innerHTML = list.map(d => {
+      const planned = parse(d.plannedDateTime);
+      const actual  = parse(d.actualDateTime || d.plannedDateTime);
+      const delay   = Math.floor((actual - planned) / 60000);
+      const minutes = Math.round((actual - now) / 60000);
+
+      const track        = d.actualTrack || d.plannedTrack || '-';
+      const trackChanged = d.plannedTrack && d.actualTrack && d.plannedTrack !== d.actualTrack;
+
+      // Tweede regel: storingsmelding gaat voor, anders de route
+      let sub = '';
+      if (d.cancelled) {
+        sub = '<div class="sub alert">Rijdt niet</div>';
+      } else if (d.messages && d.messages.length) {
+        sub = `<div class="sub warn">${esc(d.messages.map(m => m.message).join(' · '))}</div>`;
+      } else if (trackChanged) {
+        sub = `<div class="sub warn">Let op: gewijzigd vertrekspoor</div>`;
+      } else if (d.routeStations && d.routeStations.length) {
+        sub = `<div class="sub">via ${esc(d.routeStations.map(r => r.mediumName).join(', '))}</div>`;
+      }
+
+      const recog = d.recognizableDestination
+        ? `<span class="recog">via ${esc(d.recognizableDestination.name)}</span>` : '';
+
+      let eta = '';
+      if (!d.cancelled) {
+        if (minutes <= 0) eta = 'vertrekt nu';
+        else if (minutes < 60) eta = `over ${minutes} min`;
+      }
+
+      return `
+        <div class="row${d.cancelled ? ' cancelled' : ''}">
+          <div class="time">
+            <span class="planned">${hhmm(d.plannedDateTime)}</span>
+            ${delay > 0 && !d.cancelled ? `<span class="delay">+${delay}</span>` : ''}
+          </div>
+          <div class="dest">
+            <div class="name">${esc(d.direction)}${recog}</div>
+            ${sub}
+          </div>
+          <div class="track"><span class="${trackChanged ? 'changed' : ''}">${esc(track)}</span></div>
+          <div class="type">
+            ${esc(d.product?.longCategoryName || d.trainCategory)}
+            ${eta ? `<span class="eta">${eta}</span>` : ''}
+          </div>
+        </div>`;
+    }).join('');
+
+    // Alleen rijen tonen die volledig passen
+    while (rows.children.length > 1 && rows.scrollHeight > rows.clientHeight) {
+      rows.lastElementChild.remove();
+    }
+  }
+
+  function setStatus(state, text) {
+    const el = document.getElementById('status');
+    el.className = state;
+    document.getElementById('status-text').textContent = text;
+  }
+
+  async function load() {
+    try {
+      const res = await fetch(API_URL, { cache: 'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      departures = json.payload?.departures || [];
+      lastUpdate = new Date();
+      const stale = res.headers.get('X-Stale');
+      setStatus(stale ? 'stale' : '', (stale ? 'Verouderde gegevens — ' : 'Bijgewerkt ') +
+        lastUpdate.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+    } catch (e) {
+      // Oude data blijft staan; alleen de status verandert
+      setStatus('error', 'Geen verbinding met NS — ' + e.message);
+    }
+    render();
+  }
+
+  function tick() {
+    document.getElementById('clock').textContent =
+      new Date().toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  tick();
+  setInterval(tick, 1000);
+  setInterval(render, 15000);   // "over X min" en vertrokken treinen bijwerken
+  load();
+  setInterval(load, REFRESH_MS);
+
+  // Veiligheidsnet voor schermen die dagen aan staan: elke nacht om ~04:00 herladen
+  setInterval(() => { const n = new Date(); if (n.getHours() === 4 && n.getMinutes() === 0) location.reload(); }, 60000);
+</script>
+</body>
+</html>

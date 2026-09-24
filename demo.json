@@ -1,0 +1,311 @@
+{
+  "payload": {
+    "source": "DVS",
+    "departures": [
+      {
+        "direction": "Amsterdam Centraal",
+        "name": "NS  5854",
+        "plannedDateTime": "2026-09-24T15:56:00+0200",
+        "actualDateTime": "2026-09-24T15:56:00+0200",
+        "plannedTrack": "1",
+        "actualTrack": "1",
+        "product": {
+          "number": "5854",
+          "categoryCode": "SPR",
+          "longCategoryName": "Sprinter",
+          "operatorName": "NS",
+          "type": "TRAIN"
+        },
+        "trainCategory": "SPR",
+        "cancelled": false,
+        "routeStations": [
+          {
+            "mediumName": "Amersfoort C."
+          },
+          {
+            "mediumName": "Baarn"
+          },
+          {
+            "mediumName": "Hilversum"
+          },
+          {
+            "mediumName": "Naarden-Bussum"
+          }
+        ],
+        "messages": [],
+        "departureStatus": "UNKNOWN"
+      },
+      {
+        "direction": "Amersfoort Vathorst",
+        "name": "NS  5853",
+        "plannedDateTime": "2026-09-24T16:03:00+0200",
+        "actualDateTime": "2026-09-24T16:11:14+0200",
+        "plannedTrack": "3",
+        "actualTrack": "3",
+        "product": {
+          "number": "5853",
+          "categoryCode": "SPR",
+          "longCategoryName": "Sprinter",
+          "operatorName": "NS",
+          "type": "TRAIN"
+        },
+        "trainCategory": "SPR",
+        "cancelled": false,
+        "routeStations": [],
+        "messages": [],
+        "departureStatus": "UNKNOWN"
+      },
+      {
+        "direction": "Breda",
+        "recognizableDestination": {
+          "code": "SHL",
+          "name": "Schiphol Airport ✈"
+        },
+        "name": "NS  1854",
+        "plannedDateTime": "2026-09-24T16:04:00+0200",
+        "actualDateTime": "2026-09-24T16:04:00+0200",
+        "plannedTrack": "2",
+        "actualTrack": "2",
+        "product": {
+          "number": "1854",
+          "categoryCode": "ICD",
+          "longCategoryName": "Intercity direct",
+          "operatorName": "NS",
+          "type": "TRAIN"
+        },
+        "trainCategory": "ICD",
+        "cancelled": false,
+        "routeStations": [],
+        "messages": [
+          {
+            "message": "Let op: overstappen op Amersfoort C.",
+            "style": "WARNING"
+          }
+        ],
+        "departureStatus": "UNKNOWN"
+      },
+      {
+        "direction": "Utrecht Centraal",
+        "name": "NS  5654",
+        "plannedDateTime": "2026-09-24T16:12:00+0200",
+        "actualDateTime": "2026-09-24T16:12:00+0200",
+        "plannedTrack": "1",
+        "actualTrack": "1",
+        "product": {
+          "number": "5654",
+          "categoryCode": "SPR",
+          "longCategoryName": "Sprinter",
+          "operatorName": "NS",
+          "type": "TRAIN"
+        },
+        "trainCategory": "SPR",
+        "cancelled": false,
+        "routeStations": [
+          {
+            "mediumName": "Amersfoort C."
+          },
+          {
+            "mediumName": "Den Dolder"
+          },
+          {
+            "mediumName": "Bilthoven"
+          },
+          {
+            "mediumName": "Overvecht"
+          }
+        ],
+        "messages": [],
+        "departureStatus": "UNKNOWN"
+      },
+      {
+        "direction": "Zwolle",
+        "name": "NS  5655",
+        "plannedDateTime": "2026-09-24T16:16:00+0200",
+        "actualDateTime": "2026-09-24T16:16:00+0200",
+        "plannedTrack": "3",
+        "actualTrack": "3",
+        "product": {
+          "number": "5655",
+          "categoryCode": "SPR",
+          "longCategoryName": "Sprinter",
+          "operatorName": "NS",
+          "type": "TRAIN"
+        },
+        "trainCategory": "SPR",
+        "cancelled": false,
+        "routeStations": [
+          {
+            "mediumName": "Vathorst"
+          },
+          {
+            "mediumName": "Nijkerk"
+          },
+          {
+            "mediumName": "Putten"
+          },
+          {
+            "mediumName": "Harderwijk"
+          }
+        ],
+        "messages": [],
+        "departureStatus": "UNKNOWN"
+      },
+      {
+        "direction": "Amsterdam Centraal",
+        "name": "NS  5856",
+        "plannedDateTime": "2026-09-24T16:26:00+0200",
+        "actualDateTime": "2026-09-24T16:26:00+0200",
+        "plannedTrack": "1",
+        "actualTrack": "1",
+        "product": {
+          "number": "5856",
+          "categoryCode": "SPR",
+          "longCategoryName": "Sprinter",
+          "operatorName": "NS",
+          "type": "TRAIN"
+        },
+        "trainCategory": "SPR",
+        "cancelled": false,
+        "routeStations": [
+          {
+            "mediumName": "Amersfoort C."
+          },
+          {
+            "mediumName": "Baarn"
+          },
+          {
+            "mediumName": "Hilversum"
+          },
+          {
+            "mediumName": "Naarden-Bussum"
+          }
+        ],
+        "messages": [],
+        "departureStatus": "UNKNOWN"
+      },
+      {
+        "direction": "Amersfoort Vathorst",
+        "name": "NS  5855",
+        "plannedDateTime": "2026-09-24T16:33:00+0200",
+        "actualDateTime": "2026-09-24T16:33:00+0200",
+        "plannedTrack": "3",
+        "actualTrack": "3",
+        "product": {
+          "number": "5855",
+          "categoryCode": "SPR",
+          "longCategoryName": "Sprinter",
+          "operatorName": "NS",
+          "type": "TRAIN"
+        },
+        "trainCategory": "SPR",
+        "cancelled": false,
+        "routeStations": [],
+        "messages": [],
+        "departureStatus": "UNKNOWN"
+      },
+      {
+        "direction": "Breda",
+        "recognizableDestination": {
+          "code": "SHL",
+          "name": "Schiphol Airport ✈"
+        },
+        "name": "NS  1856",
+        "plannedDateTime": "2026-09-24T16:34:00+0200",
+        "actualDateTime": "2026-09-24T16:34:00+0200",
+        "plannedTrack": "2",
+        "actualTrack": "2",
+        "product": {
+          "number": "1856",
+          "categoryCode": "ICD",
+          "longCategoryName": "Intercity direct",
+          "operatorName": "NS",
+          "type": "TRAIN"
+        },
+        "trainCategory": "ICD",
+        "cancelled": false,
+        "routeStations": [
+          {
+            "mediumName": "Amersfoort C."
+          },
+          {
+            "mediumName": "Hilversum"
+          },
+          {
+            "mediumName": "Duivendrecht"
+          },
+          {
+            "mediumName": "Amsterdam Zuid"
+          }
+        ],
+        "messages": [],
+        "departureStatus": "UNKNOWN"
+      },
+      {
+        "direction": "Utrecht Centraal",
+        "name": "NS  5656",
+        "plannedDateTime": "2026-09-24T16:42:00+0200",
+        "actualDateTime": "2026-09-24T16:42:00+0200",
+        "plannedTrack": "1",
+        "actualTrack": "1",
+        "product": {
+          "number": "5656",
+          "categoryCode": "SPR",
+          "longCategoryName": "Sprinter",
+          "operatorName": "NS",
+          "type": "TRAIN"
+        },
+        "trainCategory": "SPR",
+        "cancelled": false,
+        "routeStations": [
+          {
+            "mediumName": "Amersfoort C."
+          },
+          {
+            "mediumName": "Den Dolder"
+          },
+          {
+            "mediumName": "Bilthoven"
+          },
+          {
+            "mediumName": "Overvecht"
+          }
+        ],
+        "messages": [],
+        "departureStatus": "UNKNOWN"
+      },
+      {
+        "direction": "Zwolle",
+        "name": "NS  5657",
+        "plannedDateTime": "2026-09-24T16:46:00+0200",
+        "actualDateTime": "2026-09-24T16:46:00+0200",
+        "plannedTrack": "3",
+        "actualTrack": "3",
+        "product": {
+          "number": "5657",
+          "categoryCode": "SPR",
+          "longCategoryName": "Sprinter",
+          "operatorName": "NS",
+          "type": "TRAIN"
+        },
+        "trainCategory": "SPR",
+        "cancelled": false,
+        "routeStations": [
+          {
+            "mediumName": "Vathorst"
+          },
+          {
+            "mediumName": "Nijkerk"
+          },
+          {
+            "mediumName": "Putten"
+          },
+          {
+            "mediumName": "Harderwijk"
+          }
+        ],
+        "messages": [],
+        "departureStatus": "UNKNOWN"
+      }
+    ]
+  }
+}
